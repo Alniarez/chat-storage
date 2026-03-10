@@ -1,0 +1,24 @@
+## Interface: 120000, 120001
+## Title: Chat Storage
+## Notes: Automatically enables chat logging on login
+## Author: Alniarez
+## Version: 1.0
+## SavedVariables: ChatStorageDB
+
+## IconTexture: Interface\Icons\ui_chat
+
+## Category-enUS: Chat
+## Category-deDE: Chat
+## Category-esES: Chat
+## Category-esMX: Chat
+## Category-frFR: Discussion
+## Category-itIT: Chat
+## Category-koKR: 대화
+## Category-ptBR: Bate-papo
+## Category-ruRU: Чат
+## Category-zhCN: 聊天
+## Category-zhTW: 對話
+
+
+ChatStorage.lua
+ChatStorageSettings.lua
