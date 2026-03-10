@@ -1,6 +1,6 @@
 ## Interface: 120000, 120001
 ## Title: Chat Storage
-## Notes: Automatically enables chat logging on login
+## Notes: Automatically enables chat logging on character login
 ## Author: Alniarez
 ## Version: 1.0
 ## SavedVariables: ChatStorageDB

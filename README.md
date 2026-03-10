@@ -2,10 +2,10 @@
 ChatStorage
 
 # Short Description
-Automatically manages World of Warcraft chat logging with simple controls and a clean settings panel.
+Automatically enables chat logging on character login.
 
 # Description
-ChatStorage is a lightweight addon that helps you manage WoW’s built-in chat logging. It can automatically enable `/chatlog` when you log in and provides simple controls through slash commands and the Blizzard Settings panel.
+ChatStorage is a lightweight addon that helps you manage WoW’s built-in chat logging. It can automatically enable `/chatlog` when you log in.
 
 ## Features:
 
