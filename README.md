@@ -1,3 +1,5 @@
+A World of Warcraft addon.
+
 # Title
 ChatStorage
 
