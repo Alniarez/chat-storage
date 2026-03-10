@@ -2,7 +2,7 @@
 ## Title: Chat Storage
 ## Notes: Automatically enables chat logging on character login
 ## Author: Alniarez
-## Version: 1.0
+## Version: 1.1
 ## SavedVariables: ChatStorageDB
 
 ## IconTexture: Interface\Icons\ui_chat
