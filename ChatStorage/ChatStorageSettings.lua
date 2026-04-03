@@ -22,6 +22,7 @@ end
 -- Settings category ------------------------------
 local category, layout = Settings.RegisterVerticalLayoutCategory("ChatStorage")
 addon.settingsCategory = category
+ChatStorage.settingsCategory = category
 
 local function InitializeSettings()
 
@@ -69,6 +70,33 @@ local function InitializeSettings()
 		ChatStorageDB.options.enableOnLogin = Settings.GetValue("CS_ENABLE_ON_LOGIN")
 	end)
 
+	-- Show minimap icon ------------------------------
+	local minimapSetting = Settings.RegisterAddOnSetting(
+		category,
+		"CS_SHOW_MINIMAP_ICON",
+		"showMinimapIcon",
+		ChatStorageDB.options,
+		Settings.VarType.Boolean,
+		"Show minimap icon",
+		Settings.Default.True
+	)
+
+	Settings.CreateCheckbox(
+		category,
+		minimapSetting,
+		"Show or hide the ChatStorage icon on the minimap."
+	)
+
+	Settings.SetOnValueChangedCallback("CS_SHOW_MINIMAP_ICON", function()
+		local value = Settings.GetValue("CS_SHOW_MINIMAP_ICON")
+		ChatStorageDB.options.showMinimapIcon = value
+		ChatStorageDB.minimapIcon.hide = not value
+		if value then
+			ChatStorageBroker.ShowMinimapIcon()
+		else
+			ChatStorageBroker.HideMinimapIcon()
+		end
+	end)
 
 	Settings.RegisterAddOnCategory(category)
 end

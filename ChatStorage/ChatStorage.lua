@@ -16,6 +16,13 @@ local function InitDB()
 	if ChatStorageDB.options.chatLoggingEnabled == nil then
 		ChatStorageDB.options.chatLoggingEnabled = true
 	end
+
+	if ChatStorageDB.options.showMinimapIcon == nil then
+		ChatStorageDB.options.showMinimapIcon = true
+	end
+
+	ChatStorageDB.minimapIcon = ChatStorageDB.minimapIcon or {}
+	ChatStorageDB.minimapIcon.hide = not ChatStorageDB.options.showMinimapIcon
 end
 
 -- Helper functions ------------------------------
@@ -56,10 +63,12 @@ local function PrintHelp()
 	print("|cffffff00/chatstorage toggle|r " .. "|cffbbbbbb- toggle chat logging|r")
 	print("|cffffff00/chatstorage true|r " .. "|cffbbbbbb- enable chat logging|r")
 	print("|cffffff00/chatstorage false|r " .. "|cffbbbbbb- disable chat logging|r")
+	print("|cffffff00/chatstorage minimap|r " .. "|cffbbbbbb- toggle minimap icon|r")
 end
 
 -- ChatStorage API ------------------------------
 ChatStorage = {}
+ChatStorage.PrintHelp = PrintHelp
 
 function ChatStorage.Enable()
 	SetLogging(true)
@@ -107,6 +116,21 @@ SlashCmdList["CHATSTORAGE"] = function(msg)
 	if msg == "false" then
 		ChatStorage.Disable()
 		PrintStatus()
+		return
+	end
+
+	if msg == "minimap" then
+		local shown = not ChatStorageDB.options.showMinimapIcon
+		ChatStorageDB.options.showMinimapIcon = shown
+		ChatStorageDB.minimapIcon.hide = not shown
+		if ChatStorageBroker then
+			if shown then
+				ChatStorageBroker.ShowMinimapIcon()
+			else
+				ChatStorageBroker.HideMinimapIcon()
+			end
+			print("|cff33ff99" .. ADDON_NAME .. ":|r minimap icon " .. (shown and "|cff55ff55shown|r" or "|cffff5555hidden|r"))
+		end
 		return
 	end
 
