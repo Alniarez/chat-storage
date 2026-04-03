@@ -24,6 +24,7 @@ ChatStorage is a lightweight addon that helps you manage WoW’s built-in chat l
 /chatstorage toggle
 /chatstorage true
 /chatstorage false
+/chatstorage minimap
 ```
 
 ## Chat logs are written to:
