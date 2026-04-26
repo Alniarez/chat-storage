@@ -146,7 +146,7 @@ local function OnEvent(_, event, ...)
 		if ChatStorageDB.options.enableOnLogin then
 			if not IsLogging() then
 				ChatStorage.Enable()
-				print("|cff33ff99" .. ADDON_NAME .. ":|r |cff55ff55chat logging enabled automatically.|r")
+				DebugPrint("|cff33ff99" .. ADDON_NAME .. ":|r |cff55ff55chat logging enabled automatically.|r")
 			end
 		end
 
