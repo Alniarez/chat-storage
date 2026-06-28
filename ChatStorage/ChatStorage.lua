@@ -140,19 +140,23 @@ end
 
 -- Events ------------------------------
 local function OnEvent(_, event, ...)
-	if event == "PLAYER_LOGIN" then
-		InitDB()
-
+	if event == "ADDON_LOADED" then
+		local addonName = ...
+		if addonName == ADDON_NAME then
+			InitDB()
+			CS:UnregisterEvent("ADDON_LOADED")
+			DebugPrint("Loaded.")
+		end
+	elseif event == "PLAYER_LOGIN" then
 		if ChatStorageDB.options.enableOnLogin then
 			if not IsLogging() then
 				ChatStorage.Enable()
 				DebugPrint("|cff33ff99" .. ADDON_NAME .. ":|r |cff55ff55chat logging enabled automatically.|r")
 			end
 		end
-
-		DebugPrint("Loaded.")
 	end
 end
 
+CS:RegisterEvent("ADDON_LOADED")
 CS:RegisterEvent("PLAYER_LOGIN")
 CS:SetScript("OnEvent", OnEvent)

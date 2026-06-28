@@ -1,10 +1,6 @@
 local ADDON_NAME = ...
 local addon = {}
 
--- Ensure SavedVariables exist (options UI may load early)
-ChatStorageDB = ChatStorageDB or {}
-ChatStorageDB.options = ChatStorageDB.options or {}
-
 -- Helpers ------------------------------
 local function IsLogging()
 	if LoggingChat then
@@ -101,4 +97,11 @@ local function InitializeSettings()
 	Settings.RegisterAddOnCategory(category)
 end
 
-InitializeSettings()
+local settingsFrame = CreateFrame("Frame")
+settingsFrame:RegisterEvent("ADDON_LOADED")
+settingsFrame:SetScript("OnEvent", function(_, event, addonName)
+	if addonName == ADDON_NAME then
+		InitializeSettings()
+		settingsFrame:UnregisterEvent("ADDON_LOADED")
+	end
+end)
