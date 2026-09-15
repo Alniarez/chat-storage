@@ -17,12 +17,12 @@ ChatStorage is a lightweight addon that helps you manage WoW’s built-in chat l
 
 ## Slash Commands:
 
-```
-/chatstorage
-/chatstorage toggle
-/chatstorage true
-/chatstorage false
-```
+*   `/chatstorage` - shows help
+*   `/chatstorage toggle` - toggles on/off
+*   `/chatstorage true` - enables logging
+*   `/chatstorage false` - disables logging
+*   `/chatstorage minimap` - toggles minimap button visibility
+
 
 ## Chat logs are written to:
 
