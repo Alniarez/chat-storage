@@ -17,12 +17,9 @@ local function InitDB()
 		ChatStorageDB.options.chatLoggingEnabled = true
 	end
 
-	if ChatStorageDB.options.showMinimapIcon == nil then
-		ChatStorageDB.options.showMinimapIcon = true
-	end
-
-	ChatStorageDB.minimapIcon = ChatStorageDB.minimapIcon or {}
-	ChatStorageDB.minimapIcon.hide = not ChatStorageDB.options.showMinimapIcon
+	-- Clean up leftovers from the old minimap icon
+	ChatStorageDB.options.showMinimapIcon = nil
+	ChatStorageDB.minimapIcon = nil
 end
 
 -- Helper functions ------------------------------
@@ -63,7 +60,6 @@ local function PrintHelp()
 	print("|cffffff00/chatstorage toggle|r " .. "|cffbbbbbb- toggle chat logging|r")
 	print("|cffffff00/chatstorage true|r " .. "|cffbbbbbb- enable chat logging|r")
 	print("|cffffff00/chatstorage false|r " .. "|cffbbbbbb- disable chat logging|r")
-	print("|cffffff00/chatstorage minimap|r " .. "|cffbbbbbb- toggle minimap icon|r")
 end
 
 -- ChatStorage API ------------------------------
@@ -119,23 +115,53 @@ SlashCmdList["CHATSTORAGE"] = function(msg)
 		return
 	end
 
-	if msg == "minimap" then
-		local shown = not ChatStorageDB.options.showMinimapIcon
-		ChatStorageDB.options.showMinimapIcon = shown
-		ChatStorageDB.minimapIcon.hide = not shown
-		if ChatStorageBroker then
-			if shown then
-				ChatStorageBroker.ShowMinimapIcon()
-			else
-				ChatStorageBroker.HideMinimapIcon()
-			end
-			print("|cff33ff99" .. ADDON_NAME .. ":|r minimap icon " .. (shown and "|cff55ff55shown|r" or "|cffff5555hidden|r"))
-		end
+	print("|cffff5555Unknown command.|r")
+	PrintHelp()
+end
+
+-- AddOn Compartment ------------------------------
+local function ShowCompartmentTooltip(button)
+	GameTooltip:SetOwner(button, "ANCHOR_LEFT")
+	GameTooltip:AddLine("Chat Storage", 1, 0.82, 0)
+	if IsLogging() then
+		GameTooltip:AddLine("Chat logging: ON", 0.33, 1, 0.33)
+	else
+		GameTooltip:AddLine("Chat logging: OFF", 1, 0.33, 0.33)
+	end
+	GameTooltip:AddLine(" ")
+	GameTooltip:AddLine("Left-click: toggle logging", 1, 1, 1)
+	if ChatStorage.settingsCategory then
+		GameTooltip:AddLine("Right-click: open settings", 1, 1, 1)
+	else
+		GameTooltip:AddLine("Right-click: print help", 1, 1, 1)
+	end
+	GameTooltip:Show()
+end
+
+local function RegisterCompartment()
+	if not AddonCompartmentFrame then
 		return
 	end
 
-	print("|cffff5555Unknown command.|r")
-	PrintHelp()
+	AddonCompartmentFrame:RegisterAddon({
+		text                = "Chat Storage",
+		icon                = "Interface\\Icons\\ui_chat",
+		registerForAnyClick = true,
+		func                = function()
+			if GetMouseButtonClicked() == "RightButton" then
+				if ChatStorage.settingsCategory then
+					Settings.OpenToCategory(ChatStorage.settingsCategory.ID)
+				else
+					PrintHelp()
+				end
+			else
+				ChatStorage.Toggle()
+				PrintStatus()
+			end
+		end,
+		funcOnEnter = ShowCompartmentTooltip,
+		funcOnLeave = function() GameTooltip:Hide() end,
+	})
 end
 
 -- Events ------------------------------
@@ -144,6 +170,7 @@ local function OnEvent(_, event, ...)
 		local addonName = ...
 		if addonName == ADDON_NAME then
 			InitDB()
+			RegisterCompartment()
 			CS:UnregisterEvent("ADDON_LOADED")
 			DebugPrint("Loaded.")
 		end
