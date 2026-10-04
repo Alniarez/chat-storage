@@ -2,6 +2,7 @@
 ## Title: Chat Storage
 ## Notes: Automatically enables chat logging on login
 ## Author: Alniarez
+## OptionalDeps: AlniDev
 ## Version: 1.1.2
 ## SavedVariables: ChatStorageDB
 
