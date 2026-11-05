@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.3
+
+- TOC update
+
 ## 1.1.2
 
 - Added AddOn compartment button (left-click: toggle logging, right-click: settings)
