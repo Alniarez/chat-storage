@@ -1,0 +1,20 @@
+package-as: ChatStorage
+
+# the addon lives in a subfolder of the repo
+move-folders:
+  ChatStorage/ChatStorage: ChatStorage
+
+# repo files that aren't part of the addon
+ignore:
+  - README.md
+  - CHANGELOG.md
+  - WHATS_NEW.md
+  - pkgmeta.yaml
+  - publish.fish
+  - license
+  - chat-storage-image.png
+  - chat-storage-image.xcf
+
+manual-changelog:
+  filename: WHATS_NEW.md
+  markup-type: markdown
